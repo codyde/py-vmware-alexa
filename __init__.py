@@ -39,6 +39,7 @@ def get_hosts():
 
 @app.route('/')
 def homepage():
+    flash("Database Configuration Currently Not Implemented")
     return render_template('index.html')
 
 @app.route('/commands/')
