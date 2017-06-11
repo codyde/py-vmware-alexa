@@ -1,0 +1,28 @@
+{
+  "intents": [
+    {
+      "intent": "YesIntent"
+    },
+    {
+      "intent": "NoIntent"
+    },
+    {
+      "intent": "CountIntent"
+    },
+    {
+      "intent": "HealthIntent"
+    },
+    {
+      "intent": "DSIntent"
+    },
+    {
+      "intent": "BuildWindowsIntent"
+    },
+
+      "intent": "BuildCentOSIntent"
+    },
+
+      "intent": "BuildNginxIntent"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+YesIntent yes
+NoIntent no
+NoIntent cancel
+NoIntent exit
+NoIntent abort
+CountIntent report total vms
+CountIntent count my virtual machines
+HealthIntent report health
+DSIntent report datastores
+BuildWindowsIntent build windows
+BuildCentOSIntent build centos
+BuildNginxIntent build ngin x

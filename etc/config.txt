@@ -1,0 +1,10 @@
+[vraConfig]
+user = demo@vsphere.local
+password = VMware123!
+tenant = vsphere.local
+
+
+[vcenterConfig]
+url = https://demovc.humblelab.com/rest
+user = administrator@vsphere.local
+password = VMware123!
