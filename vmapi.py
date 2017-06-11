@@ -5,7 +5,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable SSL warnings
 
 config = configparser.ConfigParser()
-config.read("C:\\users\\codyd\\OneDrive\\Documents\\Git\\alexavsphere\\etc\\config.txt")
+config.read("C:\\Stuff\\py-vmware-alexa\\etc\\config.txt")
 url = config.get("vcenterConfig","url")
 user = config.get("vcenterConfig","user")
 password = config.get("vcenterConfig","password")

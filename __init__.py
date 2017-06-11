@@ -1,11 +1,30 @@
-from flask import Flask
+from flask import Flask, render_template, flash, redirect, request, url_for, jsonify, session
+from flask_sqlalchemy import SQLAlchemy
 from flask_ask import Ask, statement, question
+from flask_assets import Bundle, Environment
 from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count
 from vraapi import vra_build
 
 app = Flask(__name__)
+app.secret_key = "super secret key"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///orion.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 ask = Ask(app, "/control_center")
 
+db = SQLAlchemy(app)
+
+env = Environment(app)
+js = Bundle('js/clarity-icons.min.js', 'js/clarity-icons-api.js', 'js/clarity-icons-element.js', 'js/custom-elements.min.js')
+env.register('js_all', js)
+css = Bundle('css/clarity-ui.min.css', 'css/clarity-icons.min.css')
+env.register('css_all', css)
+
+class Services(db.Model):
+   id = db.Column('service_id', db.Integer, primary_key = True)
+   serviceName = db.Column(db.String(100))
+   serviceAddress = db.Column(db.String(50))
+   servicePort = db.Column(db.Integer)
+   serviceStatus = db.Column(db.Boolean)
 
 def get_datastores():
     dsarry = []
@@ -20,7 +39,11 @@ def get_hosts():
 
 @app.route('/')
 def homepage():
-    return "Control Center Alexa App"
+    return render_template('index.html')
+
+@app.route('/commands/')
+def alexacommands():
+    return render_template('alexacommands.html')
 
 @ask.launch
 def start_skill():

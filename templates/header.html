@@ -1,0 +1,41 @@
+<!DOCTYPE html> {% assets "js_all" %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %} {% assets "css_all" %}
+<link rel=stylesheet type="text/css" href="{{ ASSET_URL }}"> {% endassets %}
+<style>
+    header .branding {
+        display: flex;
+        align-items: center;
+    }
+</style>
+<html lang="en">
+
+<head>
+    <title>
+        Py-VMware-Alexa Beta
+    </title>
+</head>
+
+<header class="header-6">
+    <div class="branding">
+        Py-VMware-Alexa Beta
+    </div>
+    <div class="header-nav">
+        <a href="/" class="active nav-link nav-text">Configuration</a>
+        <a href="/commands/" class="nav-link nav-text">Alexa Commands</a>
+    </div>
+</header>
+
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">×</span></button> {{ message }}
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
+    </div>
+    {% block body %}{% endblock %}
+</body>
+
+</html>
