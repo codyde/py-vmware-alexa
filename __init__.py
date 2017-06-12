@@ -3,6 +3,8 @@ from flask_ask import Ask, statement, question
 from flask_assets import Bundle, Environment
 from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count
 from vraapi import vra_build
+import sys,os
+import configparser
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
@@ -42,12 +44,32 @@ def homepage():
             session['wrong_pass'] = True
     return render_template('index.html')
 
-@app.route('/configure/')
+@app.route('/configure/', methods=['GET', 'POST'])
 def configurepage():
-    if session['logged_in']==True:
+    if session['logged_in'] is True:
+        if request.method == "POST":
+            url = request.form['vcenterurl']
+            user = request.form['vcenteruser']
+            password = request.form['vcenterpassword']
+            vraurl = request.form['vraurl']
+            vrauser = request.form['vrauser']
+            vrapassword = request.form['vrapass']
+            vratenant = request.form['vratenant']
+            Config = configparser.ConfigParser()
+            cfgfile = open("c:\\Users\\Public\\vconfig2.ini", 'w')
+            Config.add_section('vcenterConfig')
+            Config.set('vcenterConfig', 'url', url)
+            Config.set('vcenterConfig', 'user', user)
+            Config.set('vcenterConfig', 'password', password)
+            Config.add_section('vraConfig')
+            Config.set('vraConfig', 'url', vraurl)
+            Config.set('vraConfig', 'user', vrauser)
+            Config.set('vraConfig', 'password', vrapassword)
+            Config.set('vraConfig', 'tenant', vratenant)
+            Config.write(cfgfile)
+            cfgfile.close()
         return render_template('configure.html')
     else:
-        flash("Login First")
         return redirect(url_for('homepage'))
 
 @app.route('/commands/')
