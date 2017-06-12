@@ -5,13 +5,14 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable SSL warning
 
 def vra_auth():
-    config = configparser.ConfigParser()
-    config.read("c:\\stuff\\py-vmware-alexa\\etc\\config.txt")
-    user = config.get("vraConfig", "user")
-    password = config.get("vraConfig", "password")
-    tenant = config.get("vraConfig", "tenant")
-    url = "https://hlcloud.humblelab.com/identity/api/tokens"
-    payload = '{{"username":"{}","password":"{}","tenant":"{}"}}'.format(user,password,tenant)
+    Config = configparser.ConfigParser()
+    Config.read("/srv/avss/appdata/etc/config.ini")
+    url = Config.get("vraConfig", "url")
+    user = Config.get("vraConfig", "user")
+    password = Config.get("vraConfig", "password")
+    tenant = Config.get("vraConfig", "tenant")
+    url = "{}/api/tokens".format(url)
+    payload = '{{"username":"{}","password":"{}","tenant":"{}"}}'.format(user, password, tenant)
     headers = {
         'accept': "application/json",
         'content-type': "application/json",
@@ -23,13 +24,14 @@ def vra_auth():
 
 
 def vra_build(blueprint):
+    Config = configparser.ConfigParser()
+    Config.read("/srv/avss/appdata/etc/config.ini")
+    url = Config.get("vraConfig", "url")
     varray = {}
     auth = vra_auth()
-    vraApiUrl = "https://hlcloud.humblelab.com/catalog-service/api/consumer/entitledCatalogItemViews"
+    vraApiUrl = "{}/catalog-service/api/consumer/entitledCatalogItemViews".format(url)
     vraheaders = {'accept': "application/json", 'authorization': auth}
     tempres = requests.request("GET", vraApiUrl, headers=vraheaders, verify=False)
-    template = "https://hlcloud.humblelab.com/catalog-service/api/consumer/entitledCatalogItems/{}/requests/template"
-    req = "https://hlcloud.humblelab.com/catalog-service/api/consumer/entitledCatalogItems/{}/requests"
     for i in tempres.json()['content']:
         p = i['name']
         q = i['catalogItemId']
@@ -38,8 +40,8 @@ def vra_build(blueprint):
         'accept': "application/json",
         'authorization': auth
         }
-    template = template.format(varray[blueprint])
-    req = req.format(varray[blueprint])
+    template = "{}/catalog-service/api/consumer/entitledCatalogItems/{}/requests/template".format(url, varray[blueprint])
+    req = "{}/catalog-service/api/consumer/entitledCatalogItems/{}/requests".format(url, varray[blueprint])
     templateJson = requests.request("GET", template, headers=vraheaders, verify=False)
     vraCatDeploy = requests.request("Post", req, headers=vraheaders, data=templateJson, verify=False)
     buildStatus = "a "+blueprint+" Server build has been requested"
