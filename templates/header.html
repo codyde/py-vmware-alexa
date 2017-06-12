@@ -12,30 +12,48 @@
 
 <head>
     <title>
-        Py-VMware-Alexa Beta
+        Gideon - Py-VMware-Alexa
     </title>
 </head>
 
 <header class="header-6">
     <div class="branding">
-        Py-VMware-Alexa Beta
+        <clr-icon shape="vm"></clr-icon>
+        <span class="title">Py-VMware-Alexa</span>
     </div>
     <div class="header-nav">
-        <a href="/" class="nav-link nav-text">Configuration</a>
-        <a href="/commands/" class="nav-link nav-text">Alexa Commands</a>
+        {% if session['logged_in']==True %}
+            <a href="/" class="nav-link nav-text">Home</a>
+            <a href="/configure/" class="nav-link nav-text">Configuration</a>
+            <a href="/commands/" class="nav-link nav-text">Alexa Commands</a> 
+            <div class="header-actions">
+                <a href="/logout/" class="nav-link nav-text">
+                    Log Out
+                </a>
+            </div>
+        {% else %}
+            <a href="/" class="nav-link nav-text">Home</a> 
+        {% endif %}
     </div>
 </header>
 
 <body>
-    <div class="container">
+    <div>
         {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-        <div class="alert alert-warning alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                            aria-hidden="true">×</span></button> {{ message }}
-        </div>
-        {% endfor %} {% endif %} {% endwith %}
+        <div class="alert alert-danger">
+    <button type="button" class="close" aria-label="Close">
+        <clr-icon aria-hidden="true" shape="close"></clr-icon>
+    </button>
+    <div class="alert-item">
+        <span>
+            {{ message }}
+        </span>
     </div>
-    {% block body %}{% endblock %}
+</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+{% block body %}{% endblock %}
 </body>
-
 </html>
