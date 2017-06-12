@@ -1,7 +1,6 @@
 import requests
 import configparser
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable SSL warnings
 
 def get_vcenter_health_status():
@@ -95,7 +94,7 @@ def auth_vcenter():
     return resp.json()['value']
 
 def get_api_data(req_url):
-    sid = auth_vcenter(user,password)
+    sid = auth_vcenter()
     print('Requesting Page: {}'.format(req_url))
     resp = requests.get(req_url, verify=False, headers={'vmware-api-session-id':sid})
     if resp.status_code != 200:
