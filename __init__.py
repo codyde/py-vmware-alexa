@@ -56,7 +56,7 @@ def configurepage():
             vrapassword = request.form['vrapass']
             vratenant = request.form['vratenant']
             Config = configparser.ConfigParser()
-            cfgfile = open("c:\\Users\\Public\\vconfig2.ini", 'w')
+            cfgfile = open("/srv/avss/appdata/etc/config.ini", 'w')
             Config.add_section('vcenterConfig')
             Config.set('vcenterConfig', 'url', url)
             Config.set('vcenterConfig', 'user', user)
