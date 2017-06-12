@@ -1,0 +1,69 @@
+{% extends "header.html" %} {% block body %}
+<style>
+form .form-block>label {
+    font-size:22px;
+}
+</style>
+<div class="container ">
+    <form>
+        <section class="form-block">
+            <label class="test">vCenter Configuration</label>
+            <div class="form-group">
+                <label for="vcenter_server">vCenter Server URL</label>
+                <input type="text" id="vcenter_server" placeholder="https://vcenter.example.domain" size="45">
+            </div>
+            <div class="form-group">
+                <label for="vcenter_server_user">vCenter Server Username</label>
+                <input type="text" id="vcenter_server_user" placeholder="administrator@vsphere.local" size="45">
+            </div>
+            <div class="form-group">
+                <label for="vcenter_server_pass">vCenter User Password</label>
+                <input type="password" id="vcenter_server_pass" placeholder="Password">
+            </div>
+            <label>vRealize Automation Configuration</label>
+            <div class="form-group">
+                <label for="vra_server_url">vRA API URL</label>
+                <input type="text" id="vra_server_url" placeholder="https://vra-server.example.domain" size="45">
+            </div>
+            <div class="form-group">
+                <label for="vra_server_tenant">vRA Tenant Name</label>
+                <input type="text" id="vra_server_tenant" placeholder="vsphere.local" size="45">
+            </div>
+            <div class="form-group">
+                <label for="vra_server_user">vRA Username</label>
+                <input type="text" id="vra_server_user" placeholder="administrator@vsphere.local" size="45">
+            </div>
+            <div class="form-group">
+                <label for="vra_server_pass">vRA Password</label>
+                <input type="password" id="vra_server_pass" placeholder="Password">
+            </div>
+            <label>NSX Configuration</label>
+            <div class="form-group">
+                <label for="nsx_server_url">NSX API URL</label>
+                <input type="text" id="nsx_server_url" placeholder="https://nsx-manager.example.domain" size="45">
+            </div>
+            <div class="form-group">
+                <label for="nsx_server_user">NSX Username</label>
+                <input type="text" id="nsx_server_user" placeholder="administrator@vsphere.local" size="45">
+            </div>
+            <div class="form-group">
+                <label for="nsx_server_pass">NSX Password</label>
+                <input type="password" id="nsx_server_pass" placeholder="Password">
+            </div>
+            <label>vRealize Operations Configuration</label>
+            <div class="form-group">
+                <label for="vrops_server_url">vROPS API URL</label>
+                <input type="text" id="vrops_server_url" placeholder="https://vrops-url.example.domain" size="45">
+            </div>
+            <div class="form-group">
+                <label for="vrops_server_user">vROPS Username</label>
+                <input type="text" id="vrops_server_user" placeholder="administrator@vsphere.local" size="45">
+            </div>
+            <div class="form-group">
+                <label for="vrops_server_pass">vROPS Password</label>
+                <input type="password" id="vrops_server_pass" placeholder="Password">
+            </div>
+        </section>
+    </form>
+</div>
+{% endblock %}
