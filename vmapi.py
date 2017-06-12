@@ -81,13 +81,13 @@ def get_datastore():
     return datastores
 
 
-def auth_vcenter(username,password):
+def auth_vcenter():
     config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     user = config.get("vcenterConfig", "user")
     password = config.get("vcenterConfig", "password")
-    print('Authenticating to vCenter, user: {}'.format(username))
+    print('Authenticating to vCenter, user: {}'.format(user))
     resp = requests.post('{}/com/vmware/cis/session'.format(url), auth=(user, password), verify=False)
     if resp.status_code != 200:
         print('Error! API responded with: {}'.format(resp.status_code))
