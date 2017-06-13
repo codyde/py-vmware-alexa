@@ -26,7 +26,7 @@ RUN mkdir -p /etc/uwsgi.d && \
     mkdir -p /srv && \
     python3 -m virtualenv /srv/avss
 
-RUN . /srv/avss/bin/activate; pip3 install flask flask-ask requests configparser flask_sqlalchemy flask_assets
+RUN . /srv/avss/bin/activate; pip3 install flask flask-ask requests configparser flask_sqlalchemy flask_assets pyvmomi
 
 COPY . /srv/avss/appdata
 RUN mv configs/nginx.conf /etc/nginx/nginx.conf
@@ -42,3 +42,4 @@ RUN chown uwsgi:nginx /srv/avss && \
     chmod 755 /srv/avss/startup.sh && chmod 777 /srv/avss/appdata/etc/config.ini
 
 CMD /srv/avss/startup.sh
+CMD ["/bin/bash"]
