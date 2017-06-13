@@ -88,6 +88,13 @@ def get_datastore():
         datastores.append(i['free_space'])
     return datastores
 
+def get_hosts():
+    config = configparser.ConfigParser()
+    config.read("/srv/avss/appdata/etc/config.ini")
+    url = config.get("vcenterConfig", "url")
+    resp = get_api_data('{}/vcenter/host'.format(url))
+    k = resp.json()
+    return k['value']
 
 def auth_vcenter():
     config = configparser.ConfigParser()
