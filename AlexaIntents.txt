@@ -18,11 +18,23 @@
     {
       "intent": "BuildWindowsIntent"
     },
-
+    {
       "intent": "BuildCentOSIntent"
     },
-
+    {
       "intent": "BuildNginxIntent"
+    },
+    {
+      "intent": "HostInClusterIntent"
+    },
+    {
+      "intent": "memoryCount"
+    },
+    {
+      "intent": "ApplianceUptimeIntent"
+    },
+    {
+      "intent": "HostsIntent"
     }
   ]
 }
