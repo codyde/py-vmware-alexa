@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, redirect, request, url_for, jsonify, session
 from flask_ask import Ask, statement, question
 from flask_assets import Bundle, Environment
-from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count, get_uptime
+from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count, get_uptime, get_hosts
 from vraapi import vra_build
 import sys,os
 import configparser
@@ -110,6 +110,12 @@ def uptime_appliance():
     hosts = get_uptime()
     uptimeMsg = 'Your current VCSA uptime is {} hours'.format(hosts)
     return question(uptimeMsg)
+
+@ask.intent("HostsIntent")
+def vc_hosts():
+    hosts = get_hosts()
+    hostsMsg = 'The current hosts in your environment are {}'.format(hosts)
+    return question(hostsMsg)
 
 @ask.intent("HealthIntent")
 def share_vcenter_health():
