@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, redirect, request, url_for, jsonify, session
 from flask_ask import Ask, statement, question
 from flask_assets import Bundle, Environment
-from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count
+from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count, get_uptime
 from vraapi import vra_build
 import sys,os
 import configparser
@@ -100,10 +100,16 @@ def memory_count():
 
 @ask.intent("HostInClusterIntent")
 def hosts_in_cluster():
-    hosts = get_cluster()
+    hosts = get_clusters()
     length = len(hosts)
     hosts_in_cluster_mgr = 'You currently have {} clusters within the environment'.format(length)
     return question(hosts_in_cluster_mgr)
+
+@ask.intent("ApplianceUptimeIntent")
+def uptime_appliance():
+    hosts = get_uptime()
+    uptimeMsg = 'Your current vCenter Appliance uptime is {}'.format(hosts)
+    return question(uptimeMsg)
 
 @ask.intent("HealthIntent")
 def share_vcenter_health():
