@@ -61,8 +61,10 @@ def get_uptime():
     config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
-    i = get_api_data('{}/appliance/system/uptime'.format(url))
-    return i
+    resp = get_api_data('{}/appliance/system/uptime'.format(url))
+    k = resp.json()
+    timeSeconds = k['value']/60/60
+    return int(timeSeconds)
 
 def get_clusters():
     config = configparser.ConfigParser()
