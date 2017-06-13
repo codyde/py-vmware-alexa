@@ -10,3 +10,4 @@ DSIntent report datastores
 BuildWindowsIntent build windows
 BuildCentOSIntent build centos
 BuildNginxIntent build ngin x
+ApplianceUptimeIntent report appliance uptime
