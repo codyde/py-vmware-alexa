@@ -108,7 +108,7 @@ def hosts_in_cluster():
 @ask.intent("ApplianceUptimeIntent")
 def uptime_appliance():
     hosts = get_uptime()
-    uptimeMsg = 'Your current vCenter Appliance uptime is {}'.format(hosts)
+    uptimeMsg = 'Your current VCSA uptime is {} hours'.format(hosts)
     return question(uptimeMsg)
 
 @ask.intent("HealthIntent")
