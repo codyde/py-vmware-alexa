@@ -57,6 +57,13 @@ def get_vm(name):
     i = get_api_data('{}/vcenter/vm?filter.names={}'.format(url,name)).json()['value']
     return i
 
+def get_uptime():
+    config = configparser.ConfigParser()
+    config.read("/srv/avss/appdata/etc/config.ini")
+    url = config.get("vcenterConfig", "url")
+    i = get_api_data('/appliance/system/uptime')
+    return i
+
 def get_clusters():
     config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
