@@ -100,15 +100,15 @@ def memory_count():
 
 @ask.intent("HostInClusterIntent")
 def hosts_in_cluster():
-    hosts = get_clusters()
-    length = len(hosts)
+    hostscluster = get_clusters()
+    length = len(hostscluster)
     hosts_in_cluster_mgr = 'You currently have {} clusters within the environment'.format(length)
     return question(hosts_in_cluster_mgr)
 
 @ask.intent("ApplianceUptimeIntent")
 def uptime_appliance():
-    hosts = get_uptime()
-    uptimeMsg = 'Your current VCSA uptime is {} hours'.format(hosts)
+    ut = get_uptime()
+    uptimeMsg = 'Your current VCSA uptime is {} hours'.format(ut)
     return question(uptimeMsg)
 
 @ask.intent("HostsIntent")
