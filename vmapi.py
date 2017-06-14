@@ -1,9 +1,13 @@
 import requests
 import configparser
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable SSL warnings
 
 def get_vcenter_health_status():
+    config = configparser.ConfigParser()
+    config.read("/srv/avss/appdata/etc/config.ini")
+    url = config.get("vcenterConfig", "url")
     health = get_api_data('{}/appliance/health/system'.format(url))
     j = health.json()
     return '{}'.format(j['value'])
