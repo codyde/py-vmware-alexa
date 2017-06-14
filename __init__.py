@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, redirect, request, url_for, jsonify, session
 from flask_ask import Ask, statement, question
 from flask_assets import Bundle, Environment
-from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count, get_uptime, get_hosts
+from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count, get_uptime
 from vraapi import vra_build
 import sys,os
 import configparser
