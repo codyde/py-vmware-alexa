@@ -23,10 +23,6 @@ def get_datastores():
         dsarry.append(dsround)
     return dsarry
 
-def get_hosts():
-    vhosts = get_clusters()
-    return vhosts
-
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
     if request.method == "POST":
