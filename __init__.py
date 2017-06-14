@@ -98,7 +98,7 @@ def memory_count():
     count_msg = 'You have provisioned {} gigabytes of memory'.format(memCount)
     return question(count_msg)
 
-@ask.intent("HostInClusterIntent")
+@ask.intent("HostClusterIntent")
 def hosts_in_cluster():
     hostscluster = get_clusters()
     length = len(hostscluster)
