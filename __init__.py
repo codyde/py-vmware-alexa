@@ -1,9 +1,12 @@
-from flask import Flask, render_template, flash, redirect, request, url_for, jsonify, session
+from flask import Flask, render_template,
+flash, redirect, request, url_for, jsonify, session
 from flask_ask import Ask, statement, question
 from flask_assets import Bundle, Environment
-from vmapi import get_clusters, get_datastore, get_vcenter_health_status, vm_count, vm_cpu_count, vm_memory_count, powered_on_vm_count
+from vmapi import *
 from vraapi import vra_build
-import sys,os
+import os
+import sys
+import subprocess
 import configparser
 
 app = Flask(__name__)
@@ -11,10 +14,24 @@ app.secret_key = "super secret key"
 ask = Ask(app, "/control_center")
 
 env = Environment(app)
-js = Bundle('js/clarity-icons.min.js', 'js/clarity-icons-api.js', 'js/clarity-icons-element.js', 'js/custom-elements.min.js')
+js = Bundle('js/clarity-icons.min.js', 'js/clarity-icons-api.js',
+            'js/clarity-icons-element.js', 'js/custom-elements.min.js')
 env.register('js_all', js)
 css = Bundle('css/clarity-ui.min.css', 'css/clarity-icons.min.css')
 env.register('css_all', css)
+
+VMTENV = os.environ.copy()
+
+
+def execute(cmd, ofile=subprocess.PIPE, efile=subprocess.PIPE,
+            env=os.environ):
+    proc = subprocess.Popen(cmd, stdout=ofile, stderr=efile, env=env)
+    out, err = proc.communicate()
+    if type(out).__name__ == "bytes":
+        out = out.decode()
+
+    return (proc, out)
+
 
 def get_datastores():
     dsarry = []
@@ -23,9 +40,11 @@ def get_datastores():
         dsarry.append(dsround)
     return dsarry
 
+
 def get_hosts():
     vhosts = get_clusters()
     return vhosts
+
 
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
@@ -43,6 +62,7 @@ def homepage():
             session['logged_in'] = False
             session['wrong_pass'] = True
     return render_template('index.html')
+
 
 @app.route('/configure/', methods=['GET', 'POST'])
 def configurepage():
@@ -72,25 +92,31 @@ def configurepage():
     else:
         return redirect(url_for('homepage'))
 
+
 @app.route('/commands/')
 def alexacommands():
     return render_template('alexacommands.html')
+
 
 @app.route('/logout/')
 def logout():
     session['logged_in'] = False
     return redirect(url_for('homepage'))
 
+
 @ask.launch
 def start_skill():
     welcome_message = 'Giddeon is online'
     return question(welcome_message)
 
-@ask.intent("CountIntent")
+
+@ask.intent("VMCountIntent")
 def share_count():
     counting = vm_count()
-    count_msg = 'The total number of virtual machines registered in this v-center is {}'.format(counting)
+    count_msg = 'The total number of virtual machines \
+registered in this v-center is {}'.format(counting)
     return question(count_msg)
+
 
 @ask.intent("memoryCount")
 def memory_count():
@@ -98,45 +124,102 @@ def memory_count():
     count_msg = 'You have provisioned {} gigabytes of memory'.format(memCount)
     return question(count_msg)
 
-@ask.intent("HostInClusterIntent")
+
+@ask.intent("HostClustersIntent")
 def hosts_in_cluster():
     hosts = get_cluster()
     length = len(hosts)
-    hosts_in_cluster_mgr = 'You currently have {} clusters within the environment'.format(length)
+    hosts_in_cluster_mgr = 'You currently have {} clusters \
+within the environment'.format(length)
     return question(hosts_in_cluster_mgr)
 
-@ask.intent("HealthIntent")
+
+@ask.intent("VCenterBuildIntent")
+def share_vcenter_build():
+    (version, build) = get_vcenter_build()
+    build_msg = "vCenter Server is running " \
+                + format(version) + " using build " + build
+    return question(build_msg)
+
+
+@ask.intent("ApplianceHealthIntent")
 def share_vcenter_health():
     health = get_vcenter_health_status()
     health_msg = 'The current health of the cluster is {}'.format(health)
     return question(health_msg)
 
+
 @ask.intent("DSIntent")
 def share_ds_free():
     ds = get_datastores()
     dsTotal = len(ds)
-    ds_msg = 'You currently have {} datastores. The current free datastore space on each in gigabytes is {}'.format(dsTotal,ds)
+    ds_msg = 'You currently have {} datastores. The current free \
+datastore space on each in gigabytes is {}'.format(dsTotal, ds)
     return question(ds_msg)
+
+
+@ask.intent("HostClusterStatusIntent")
+def share_cluster_status():
+    (drs, ha, vsan) = get_cluster_status()
+    if drs:
+        drs_msg = "DRS is enabled, "
+    else:
+        drs_msg = "DRS is disabled, "
+
+    if ha:
+        ha_msg = "High Availablity is enabled "
+    else:
+        ha_msg = "High Availablity is disabled "
+
+    if vsan:
+        vsan_msg = "and Virtual SAN is enabled"
+    else:
+        vsan_msg = "and Virtual SAN is disabled"
+
+    cluster_msg = drs_msg + ha_msg + vsan_msg
+    return question(cluster_msg)
+
+
+@ask.intent("VSANClusterIntent")
+def share_vsan_version():
+    version = get_vsan_version()
+    vsan_msg = "Virtual SAN is running version " + version
+    return question(vsan_msg)
+
+
+@ask.intent("VCOSIntent")
+def share_vc_os():
+    (proc, out) = execute(["/usr/local/bin/powershell",
+                          '/Users/lamw/git/alexavsphereskill/pcli.ps1',
+                           'GetVCOS'], env=VMTENV)
+
+    vcos_msg = "The vCenter Server is running " + format(out)
+    return question(vcos_msg)
+
 
 @ask.intent("BuildWindowsIntent")
 def win_build():
     win = vra_build('Windows 2012')
     return question(win)
 
+
 @ask.intent("BuildCentOSIntent")
 def centos_build():
     centos = vra_build('CentOS')
     return question(centos)
+
 
 @ask.intent("BuildNginxIntent")
 def nginx_build():
     nginx = vra_build('Nginx')
     return question(nginx)
 
+
 @ask.intent("NoIntent")
 def no_intent():
     bye_text = 'Giddeon Shutting Down'
     return statement(bye_text)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
