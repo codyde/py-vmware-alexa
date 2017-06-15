@@ -21,7 +21,7 @@ config = configparser.ConfigParser()
 
 
 def auth_vcenter_rest():
-    config.read("etc/config.txt")
+    config.read("etc/config.ini")
     url = config.get("vcenterConfig", "url")
     username = config.get("vcenterConfig", "user")
     password = config.get("vcenterConfig", "password")
@@ -48,7 +48,7 @@ def get_rest_api_data(req_url):
 # Function to login to vSphere SOAP API
 # returns ServiceInstance
 def auth_vcenter_soap(url, username, password):
-    config.read("etc/config.txt")
+    config.read("etc/config.ini")
     url = config.get("vcenterConfig", "url")
     username = config.get("vcenterConfig", "user")
     password = config.get("vcenterConfig", "password")
@@ -90,7 +90,7 @@ def auth_vsan_soap(si):
 
 def get_vcenter_health_status():
     print("Retreiving vCenter Server Appliance Health ...")
-    config.read("etc/config.txt")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     health = get_rest_api_data('{}/rest/appliance/health/system'.format(url))
     j = health.json()
@@ -98,7 +98,7 @@ def get_vcenter_health_status():
 
 
 def vm_count():
-    config.read("etc/config.txt")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     countarry = []
     for i in get_rest_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
@@ -119,7 +119,6 @@ def vm_memory_count():
 
 
 def vm_cpu_count():
-    config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     cpucount = []
@@ -191,7 +190,7 @@ def get_networks():
 
 # Example of using vSphere SOAP API
 def get_vcenter_build():
-    config.read("etc/config.txt")
+    config.read("etc/config.ini")
     url = config.get("vcenterConfig", "url")
     username = config.get("vcenterConfig", "user")
     password = config.get("vcenterConfig", "password")
