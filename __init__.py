@@ -1,5 +1,4 @@
-from flask import Flask, render_template,
-flash, redirect, request, url_for, jsonify, session
+from flask import Flask, render_template, redirect, request, url_for, jsonify, session
 from flask_ask import Ask, statement, question
 from flask_assets import Bundle, Environment
 from vmapi import *
@@ -71,7 +70,7 @@ def configurepage():
             vrapassword = request.form['vrapass']
             vratenant = request.form['vratenant']
             Config = configparser.ConfigParser()
-            cfgfile = open("/srv/avss/appdata/etc/config.ini", 'w')
+            cfgfile = open("/srv/vapy/appdata/etc/config.ini", 'w')
             Config.add_section('vcenterConfig')
             Config.set('vcenterConfig', 'url', url)
             Config.set('vcenterConfig', 'user', user)
@@ -137,15 +136,6 @@ def share_vcenter_build():
     return question(build_msg)
 
 
-
-
-@ask.intent("HostClusterIntent")
-def hosts_in_cluster():
-    hostscluster = get_clusters()
-    length = len(hostscluster)
-    hosts_in_cluster_mgr = 'You currently have {} clusters within the environment'.format(length)
-    return question(hosts_in_cluster_mgr)
-
 @ask.intent("ApplianceUptimeIntent")
 def uptime_appliance():
     ut = get_uptime()
@@ -206,7 +196,7 @@ def share_vsan_version():
 @ask.intent("VCOSIntent")
 def share_vc_os():
     (proc, out) = execute(["/usr/local/bin/powershell",
-                          '/Users/lamw/git/alexavsphereskill/pcli.ps1',
+                          '/srv/vapy/appdata/pcli.ps1',
                            'GetVCOS'], env=VMTENV)
 
     vcos_msg = "The vCenter Server is running " + format(out)
