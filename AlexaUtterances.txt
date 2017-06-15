@@ -3,10 +3,15 @@ NoIntent no
 NoIntent cancel
 NoIntent exit
 NoIntent abort
-CountIntent report total vms
-CountIntent count my virtual machines
-HealthIntent report health
+VMCountIntent report total vms
+VMCountIntent count my virtual machines
+ApplianceHealthIntent report health
 DSIntent report datastores
+VCenterBuildIntent report vcenter build
+HostClustersIntent list hosts in clusters
+HostClustersIntent list hosts
+HostClusterStatusIntent report cluster status
+VSANClusterIntent report vsan version
 BuildWindowsIntent build windows
 BuildCentOSIntent build centos
 BuildNginxIntent build ngin x
