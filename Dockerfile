@@ -39,7 +39,7 @@ RUN rmdir /srv/avss/appdata/configs
 
 RUN chown uwsgi:nginx /srv/avss && \
     chown uwsgi:nginx /etc/uwsgi.d/avss.ini && \
-    chmod 755 /srv/avss/startup.sh && chmod 777 /srv/avss/appdata/etc/config.ini \
+    chmod 755 /srv/avss/startup.sh && chmod 777 /srv/avss/appdata/etc/config.ini && \
     chmod 777 /srv/avss/appdata/etc/auth.ini
 
 CMD /srv/avss/startup.sh
