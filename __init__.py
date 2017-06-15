@@ -142,11 +142,6 @@ def uptime_appliance():
     uptimeMsg = 'Your current VCSA uptime is {} hours'.format(ut)
     return question(uptimeMsg)
 
-@ask.intent("HostsIntent")
-def vc_hosts():
-    hosts = get_hosts()
-    hostsMsg = 'The current hosts in your environment are {}'.format(hosts)
-    return question(hostsMsg)
 
 @ask.intent("ApplianceHealthIntent")
 def share_vcenter_health():
@@ -157,12 +152,25 @@ def share_vcenter_health():
 
 @ask.intent("DSIntent")
 def share_ds_free():
-    ds = get_datastores()
+    ds = get_datastore()
     dsTotal = len(ds)
     ds_msg = 'You currently have {} datastores. The current free \
 datastore space on each in gigabytes is {}'.format(dsTotal, ds)
     return question(ds_msg)
 
+
+@ask.intent("PoweredOnVMIntent")
+def get_powered_on_vms():
+    pwrVM = powered_on_vm_count()
+    pwr_msg = 'There are currently {} virtual machines powered on in your environment'.format(pwrVM)
+    return pwr_msg
+
+@ask.intent("CPUCountIntent")
+def get_cpu_count_provisioned():
+    cpuCount = vm_cpu_count()
+    cpuCountMSG = 'Your environment currently has {} cpu provisioned'.format(cpuCount)
+    return cpuCountMSG
+    
 
 @ask.intent("HostClusterStatusIntent")
 def share_cluster_status():
