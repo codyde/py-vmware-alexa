@@ -109,10 +109,10 @@ def vm_count():
 
 def vm_memory_count():
     config = configparser.ConfigParser()
-    config.read("/srv/vapy/appdata/etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     memcount = []
-    for i in get_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
+    for i in get_rest_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
         memcount.append(i['memory_size_MiB'])
     p = sum(memcount)
     return p
@@ -120,10 +120,10 @@ def vm_memory_count():
 
 def vm_cpu_count():
     config = configparser.ConfigParser()
-    config.read("/srv/vapy/appdata/etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     cpucount = []
-    for i in get_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
+    for i in get_rest_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
         cpucount.append(i['cpu_count'])
     p = sum(cpucount)
     return p
@@ -131,10 +131,10 @@ def vm_cpu_count():
 
 def powered_on_vm_count():
     config = configparser.ConfigParser()
-    config.read("/srv/vapy/appdata/etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     onCount = []
-    for i in get_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
+    for i in get_rest_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
         if i['power_state'] == 'POWERED_ON':
             onCount.append(i['name'])
     p = len(onCount)
@@ -143,26 +143,26 @@ def powered_on_vm_count():
 
 def get_vm(name):
     config = configparser.ConfigParser()
-    config.read("/srv/vapy/appdata/etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
-    i = get_api_data('{}/rest/vcenter/vm?filter.names={}'.format(url, name))
-    return results.json()['value']
+    i = get_rest_api_data('{}/rest/vcenter/vm?filter.names={}'.format(url, name))
+    return i.json()['value']
 
 
 def get_uptime():
     config = configparser.ConfigParser()
-    config.read("/srv/vapy/appdata/etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
-    resp = get_api_data('{}/rest/appliance/system/uptime'.format(url))
+    resp = get_rest_api_data('{}/rest/appliance/system/uptime'.format(url))
     k = resp.json()
     timeSeconds = k['value']/60/60
     return int(timeSeconds)
 
 def get_clusters():
     config = configparser.ConfigParser()
-    config.read("/srv/vapy/appdata/etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
-    resp = get_api_data('{}/rest/vcenter/host'.format(url))
+    resp = get_rest_api_data('{}/rest/vcenter/host'.format(url))
     k = resp.json()
     hosts = []
     for i in k['value']:
@@ -172,9 +172,9 @@ def get_clusters():
 
 def get_datastore():
     config = configparser.ConfigParser()
-    config.read("/srv/vapy/appdata/etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
-    resp3 = get_api_data('{}/rest/vcenter/datastore'.format(url))
+    resp3 = get_rest_api_data('{}/rest/vcenter/datastore'.format(url))
     dsresp = resp3.json()
     datastores = []
     for i in dsresp['value']:
@@ -183,15 +183,16 @@ def get_datastore():
 
 def get_networks():
     config = configparser.ConfigParser()
-    config.read("/srv/vapy/appdata/etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
-    resp = get_api_data('{}/rest/vcenter/network'.format(url))
+    resp = get_rest_api_data('{}/rest/vcenter/network'.format(url))
     k = resp.json()
     return k['value']
 
 # Example of using vSphere SOAP API
 def get_vcenter_build():
     config.read("etc/config.txt")
+    url = config.get("vcenterConfig", "url")
     username = config.get("vcenterConfig", "user")
     password = config.get("vcenterConfig", "password")
     print("Retrieving vCenter Server Version and Build information ...")
