@@ -70,7 +70,7 @@ def configurepage():
             vrapassword = request.form['vrapass']
             vratenant = request.form['vratenant']
             Config = configparser.ConfigParser()
-            cfgfile = open("/srv/vapy/appdata/etc/config.ini", 'w')
+            cfgfile = open("/srv/avss/appdata/etc/config.ini", 'w')
             Config.add_section('vcenterConfig')
             Config.set('vcenterConfig', 'url', url)
             Config.set('vcenterConfig', 'user', user)
@@ -196,7 +196,7 @@ def share_vsan_version():
 @ask.intent("VCOSIntent")
 def share_vc_os():
     (proc, out) = execute(["/usr/local/bin/powershell",
-                          '/srv/vapy/appdata/pcli.ps1',
+                          '/srv/avss/appdata/pcli.ps1',
                            'GetVCOS'], env=VMTENV)
 
     vcos_msg = "The vCenter Server is running " + format(out)
