@@ -8,6 +8,8 @@ Python Flask and Flask-Ask driven integration for Amazon Alexa and VMware API's
 when it finishes building - run your container with.. 
 
 *docker run -d -p 443:443 containername*
+
+Note! The certs in the docker directory are specific to my environment; you'll want to get your own SSL certs. I used letsencrypt because it was easy. Food for thought! 
 ------------------------------------------------------------------------------
 
 Goals: 

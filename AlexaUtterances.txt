@@ -15,3 +15,8 @@ VSANClusterIntent report vsan version
 BuildWindowsIntent build windows
 BuildCentOSIntent build centos
 BuildNginxIntent build ngin x
+HostInClusterIntent report hosts in clusters
+HostInClusterIntent report hosts
+memoryCount report provisioned memory
+ApplianceUptimeIntent report appliance uptime
+HostsIntent report v center hosts 

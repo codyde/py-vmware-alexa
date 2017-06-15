@@ -41,11 +41,6 @@ def get_datastores():
     return dsarry
 
 
-def get_hosts():
-    vhosts = get_clusters()
-    return vhosts
-
-
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
     if request.method == "POST":
@@ -124,7 +119,7 @@ def memory_count():
     count_msg = 'You have provisioned {} gigabytes of memory'.format(memCount)
     return question(count_msg)
 
-
+  
 @ask.intent("HostClustersIntent")
 def hosts_in_cluster():
     hosts = get_cluster()
@@ -141,6 +136,27 @@ def share_vcenter_build():
                 + format(version) + " using build " + build
     return question(build_msg)
 
+
+
+
+@ask.intent("HostClusterIntent")
+def hosts_in_cluster():
+    hostscluster = get_clusters()
+    length = len(hostscluster)
+    hosts_in_cluster_mgr = 'You currently have {} clusters within the environment'.format(length)
+    return question(hosts_in_cluster_mgr)
+
+@ask.intent("ApplianceUptimeIntent")
+def uptime_appliance():
+    ut = get_uptime()
+    uptimeMsg = 'Your current VCSA uptime is {} hours'.format(ut)
+    return question(uptimeMsg)
+
+@ask.intent("HostsIntent")
+def vc_hosts():
+    hosts = get_hosts()
+    hostsMsg = 'The current hosts in your environment are {}'.format(hosts)
+    return question(hostsMsg)
 
 @ask.intent("ApplianceHealthIntent")
 def share_vcenter_health():

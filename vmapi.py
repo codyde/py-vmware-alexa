@@ -141,6 +141,15 @@ def get_vm(name):
     return results.json()['value']
 
 
+def get_uptime():
+    config = configparser.ConfigParser()
+    config.read("/srv/avss/appdata/etc/config.ini")
+    url = config.get("vcenterConfig", "url")
+    resp = get_api_data('{}/appliance/system/uptime'.format(url))
+    k = resp.json()
+    timeSeconds = k['value']/60/60
+    return int(timeSeconds)
+
 def get_clusters():
     config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
@@ -164,6 +173,13 @@ def get_datastore():
         datastores.append(i['free_space'])
     return datastores
 
+def get_networks():
+    config = configparser.ConfigParser()
+    config.read("/srv/avss/appdata/etc/config.ini")
+    url = config.get("vcenterConfig", "url")
+    resp = get_api_data('{}/vcenter/network'.format(url))
+    k = resp.json()
+    return k['value']
 
 # Example of using vSphere SOAP API
 def get_vcenter_build():
