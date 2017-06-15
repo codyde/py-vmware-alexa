@@ -11,7 +11,7 @@ from pyVmomi import vim
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 __all__ = ['get_vcenter_build', 'get_cluster_status', 'get_vsan_version',
-           'get_vcenter_health_status', 'vm_count', 'get_cluster']
+           'get_vcenter_health_status', 'vm_count', 'get_cluster', 'get_uptime', 'vm_memory_count']
 
 
 # Disable SSL warnings
