@@ -21,7 +21,7 @@ config = configparser.ConfigParser()
 
 
 def auth_vcenter_rest():
-    config.read("etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     username = config.get("vcenterConfig", "user")
     password = config.get("vcenterConfig", "password")
@@ -48,7 +48,7 @@ def get_rest_api_data(req_url):
 # Function to login to vSphere SOAP API
 # returns ServiceInstance
 def auth_vcenter_soap(url, username, password):
-    config.read("etc/config.ini")
+    config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     username = config.get("vcenterConfig", "user")
     password = config.get("vcenterConfig", "password")
