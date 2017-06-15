@@ -10,15 +10,17 @@ from pyVim.connect import SmartConnect, Disconnect
 from pyVmomi import vim
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-__all__ = ['get_vcenter_build', 'get_cluster_status', 'get_vsan_version',
-           'get_vcenter_health_status', 'vm_count', 'get_cluster', 'get_uptime', 'vm_memory_count']
+__all__ = ['get_vcenter_health_status', 'vm_count', 'vm_memory_count',
+           'vm_cpu_count', 'powered_on_vm_count', 'get_vm', 'get_uptime', 'get_cluster',
+           'get_datastore', 'get_networks', 'get_vcenter_build', 'get_first_cluster',
+           'get_cluster_status', 'get_vsan_version']
 
 
 # Disable SSL warnings
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 config = configparser.ConfigParser()
-
+AuthConfig = configparser.ConfigParser()
 
 def auth_vcenter_rest():
     config.read("/srv/avss/appdata/etc/config.ini")
@@ -28,6 +30,11 @@ def auth_vcenter_rest():
     print('Authenticating to vCenter REST API, user: {}'.format(username))
     resp = requests.post('{}/rest/com/vmware/cis/session'.format(url),
                          auth=(username, password), verify=False)
+    authfile = open("/srv/avss/appdata/etc/auth.ini", 'w')
+    AuthConfig.add_section('auth')
+    AuthConfig.set('auth', 'sid', resp.json()['value'])
+    AuthConfig.write(authfile)
+    authfile.close()
     if resp.status_code != 200:
         print('Error! API responded with: {}'.format(resp.status_code))
         return
@@ -35,12 +42,22 @@ def auth_vcenter_rest():
 
 
 def get_rest_api_data(req_url):
-    sid = auth_vcenter_rest()
+    AuthConfig.read("/srv/avss/appdata/etc/auth.ini")
+    try:
+        sid = AuthConfig.get("auth", "sid")
+        print("Using already cached auth sid")
+    except:
+        print("Auth sid was invalid, requesting new")
+        auth_vcenter_rest()
+        AuthConfig.read("/srv/avss/appdata/etc/auth.ini")
+        sid = AuthConfig.get("auth", "sid")
     print('Requesting Page: {}'.format(req_url))
     resp = requests.get(req_url, verify=False,
                         headers={'vmware-api-session-id': sid})
     if resp.status_code != 200:
         print('Error! API responded with: {}'.format(resp.status_code))
+        auth_vcenter_rest()
+        get_rest_api_data(req_url)
         return
     return resp
 
@@ -249,7 +266,6 @@ def get_vsan_version():
     print("Retrieving vSAN Cluster Status ...")
     si = auth_vcenter_soap()
     vcMos = auth_vsan_soap(si)
-
     cluster = get_first_cluster(si)
     vchs = vcMos['vsan-cluster-health-system']
     results = vchs.VsanVcClusterQueryVerifyHealthSystemVersions(cluster)
