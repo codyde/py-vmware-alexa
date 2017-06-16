@@ -135,6 +135,10 @@ def share_vcenter_build():
                 + format(version) + " using build " + build
     return question(build_msg)
 
+@ask.intent('RBelongToUsIntent')
+def all_your_base():
+    notice = render_template('all_your_base_msg', who='us')
+    return statement(notice)
 
 @ask.intent("ApplianceUptimeIntent")
 def uptime_appliance():
@@ -170,8 +174,8 @@ def get_powered_on_vms():
 @ask.intent("cpuIntent")
 def share_cpu_intent():
     vmcpu = vm_cpu_count()
-    print(vmcpu)
-    return 'You currently have {} CPU provisioned'.format(vmcpu)
+    print(str(vmcpu))
+    return str(vmcpu)
 
 
 @ask.intent("HostClusterStatusIntent")
