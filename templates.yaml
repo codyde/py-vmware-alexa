@@ -4,3 +4,8 @@ multiple_line_example: |
   <speak>
       Here is a number for {{ who }}<w role="amazon:VBD">read</w> 
   </speak>
+
+vcenter_build: | 
+  <speak>
+      vCenter Server is running {{ version }} using build {{ build }} <say-as interpret-as="interjection">booya</say-as>
+  </speak>
