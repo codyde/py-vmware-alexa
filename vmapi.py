@@ -125,7 +125,6 @@ def vm_count():
 
 
 def vm_memory_count():
-    config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     memcount = []
@@ -139,14 +138,14 @@ def vm_cpu_count():
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     cpucount = []
-    for i in get_rest_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
-        cpucount.append(i['cpu_count'])
-    p = sum(cpucount)
-    return p
+    for vm in get_rest_api_data('{}/rest/vcenter/vm'.format(url)).json()['value']:
+        cpucount.append(vm['cpu_count'])
+    sumvm = sum(cpucount)
+    print(sumvm)
+    return sumvm
 
 
 def powered_on_vm_count():
-    config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     onCount = []
@@ -154,11 +153,11 @@ def powered_on_vm_count():
         if i['power_state'] == 'POWERED_ON':
             onCount.append(i['name'])
     p = len(onCount)
+    print(p)
     return p
 
 
 def get_vm(name):
-    config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     i = get_rest_api_data('{}/rest/vcenter/vm?filter.names={}'.format(url, name))
@@ -166,7 +165,6 @@ def get_vm(name):
 
 
 def get_uptime():
-    config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     resp = get_rest_api_data('{}/rest/appliance/system/uptime'.format(url))
@@ -175,7 +173,6 @@ def get_uptime():
     return int(timeSeconds)
 
 def get_cluster():
-    config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     resp = get_rest_api_data('{}/rest/vcenter/host'.format(url))
@@ -187,7 +184,6 @@ def get_cluster():
 
 
 def get_datastore():
-    config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     resp3 = get_rest_api_data('{}/rest/vcenter/datastore'.format(url))
@@ -198,7 +194,6 @@ def get_datastore():
     return datastores
 
 def get_networks():
-    config = configparser.ConfigParser()
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     resp = get_rest_api_data('{}/rest/vcenter/network'.format(url))
