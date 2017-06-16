@@ -1,0 +1,62 @@
+{
+  "intents": [
+    {
+      "intent": "YesIntent"
+    },
+    {
+      "intent": "NoIntent"
+    },
+    {
+      "intent": "VMCountIntent"
+    },
+    {
+      "intent": "ApplianceHealthIntent"
+    },
+    {
+      "intent": "VCenterBuildIntent"
+    },
+    {
+      "intent": "HostClustersIntent"
+    },
+     {
+      "intent": "HostClusterStatusIntent"
+    },
+    {
+      "intent": "VSANClusterIntent"
+    },    
+    {
+      "intent": "DSIntent"
+    },
+    {
+      "intent": "BuildWindowsIntent"
+    },
+    {
+      "intent": "BuildCentOSIntent"
+    },
+    {
+      "intent": "BuildNginxIntent"
+    },
+    {
+      "intent": "HostInClusterIntent"
+    },
+    {
+      "intent": "memoryCount"
+    },
+    {
+      "intent": "ApplianceUptimeIntent"
+    },
+    {
+      "intent": "HostsIntent"
+    },
+    {
+      "intent": "PoweredOnVMIntent"
+    },
+    {
+      "intent": "CPUCountIntent"
+    },
+    {
+      "intent": "dcIntent"
+    }
+
+  ]
+}

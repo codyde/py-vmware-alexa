@@ -1,0 +1,22 @@
+YesIntent yes
+NoIntent no
+NoIntent exit
+NoIntent thank you
+VMCountIntent report total vms
+VMCountIntent count my virtual machines
+ApplianceHealthIntent report health
+DSIntent report datastores
+VCenterBuildIntent report vcenter build
+HostClusterStatusIntent report cluster status
+VSANClusterIntent report vsan version
+BuildWindowsIntent build windows
+BuildCentOSIntent build centos
+BuildNginxIntent build ngin x
+HostInClusterIntent report hosts in clusters
+HostInClusterIntent report hosts
+memoryCount report provisioned memory
+ApplianceUptimeIntent report appliance uptime
+PoweredOnVMIntent count powered on machines 
+CPUCountIntent report provisioned CPU
+dcIntent report datacenter status
+dcIntent report my datacenter
