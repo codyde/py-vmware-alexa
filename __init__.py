@@ -137,7 +137,7 @@ def share_vcenter_build():
 
 @ask.intent('RBelongToUsIntent')
 def all_your_base():
-    notice = render_template('all_your_base_msg', who='us')
+    notice = render_template('multiple_line_example', who='Cody')
     return statement(notice)
 
 @ask.intent("ApplianceUptimeIntent")
