@@ -169,8 +169,8 @@ def get_powered_on_vms():
 
 @ask.intent("cpuIntent")
 def share_cpu_intent():
-    health = vm_cpu_count
-    return 'You currently have {} CPU provisioned'.format(health)
+    vmcpu = vm_cpu_count()
+    return 'You currently have {} CPU provisioned'.format(vmcpu)
 
 
 @ask.intent("HostClusterStatusIntent")
