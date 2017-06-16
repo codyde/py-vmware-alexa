@@ -131,9 +131,8 @@ within the environment'.format(length)
 @ask.intent("VCenterBuildIntent")
 def share_vcenter_build():
     (version, build) = get_vcenter_build()
-    build_msg = "vCenter Server is running " \
-                + format(version) + " using build " + build
-    return question(build_msg)
+    notice = render_template('vcenter_build', version=format(version), build=build)
+    return statement(notice)
 
 @ask.intent('RBelongToUsIntent')
 def all_your_base():
