@@ -170,6 +170,7 @@ def get_powered_on_vms():
 @ask.intent("cpuIntent")
 def share_cpu_intent():
     vmcpu = vm_cpu_count()
+    print(vmcpu)
     return 'You currently have {} CPU provisioned'.format(vmcpu)
 
 
