@@ -6,8 +6,8 @@ vcenter_build: |
 
 capacity_report: |
   <speak>
-      My vCenter environment is currently running vCenter {{ version }} with build <say-as interpret-as="digits">{{build}}</say-as> and my appliance deployment health 
-      is {{ health }}. My vCenter has been running for {{ uptime }} hours. 
-      I currently have {{ cpu }} CPU and {{ memory }} GB of memory provisioned across {{ clustercount }} clusters. This represents {{ vmcount }} of which {{ poweredon }}
-      are powered on.
+      My v Center environment is currently running v Center {{ version }} with build <say-as interpret-as="digits">{{build}}</say-as> and my appliance deployment health 
+      is {{ health }}. My v Center has been running for {{ uptime }} hours. 
+      I currently have {{ cpu }} CPU provisioned and {{ memory }} gigabytes of memory provisioned across {{ clustercount }}  <say-as interpret-as="spell-out">esxi</say-as> hosts. 
+      This represents a total of {{ vmcount }} virtual machines of which {{ poweredon }} are currently powered on.
   </speak>
