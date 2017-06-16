@@ -7,5 +7,12 @@ multiple_line_example: |
 
 vcenter_build: | 
   <speak>
-      vCenter Server is running {{ version }} using build {{ build }} <say-as interpret-as="interjection">booya</say-as>
+      vCenter Server is running {{ version }} using build: <say-as interpret-as="digits">{{build}}</say-as><say-as interpret-as="interjection">booya</say-as>
+  </speak>
+
+
+capacity_report: |
+  <speak>
+      This vCenter environment is currently running vCenter {{ version }} with build: <say-as interpret-as="digits">{{build}}</say-as> You currently have {{ cpu }} CPU provsioned.
+      You have {{ memory }} GB of memory provisioned. Your appliance deployment health is {{ health }}.
   </speak>
