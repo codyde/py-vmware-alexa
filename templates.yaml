@@ -1,10 +1,3 @@
-all_your_base_msg: All your base are belong to {{ who }}
-
-multiple_line_example: |
-  <speak>
-      Here is a number for {{ who }}<w role="amazon:VBD">read</w> 
-  </speak>
-
 vcenter_build: | 
   <speak>
       vCenter Server is running {{ version }} using build: <say-as interpret-as="digits">{{build}}</say-as><say-as interpret-as="interjection">booya</say-as>
@@ -13,6 +6,8 @@ vcenter_build: |
 
 capacity_report: |
   <speak>
-      This vCenter environment is currently running vCenter {{ version }} with build: <say-as interpret-as="digits">{{build}}</say-as> You currently have {{ cpu }} CPU provsioned.
-      You have {{ memory }} GB of memory provisioned. Your appliance deployment health is {{ health }}.
+      My vCenter environment is currently running vCenter {{ version }} with build <say-as interpret-as="digits">{{build}}</say-as> and my appliance deployment health 
+      is {{ health }}. My vCenter has been running for {{ uptime }} hours. 
+      I currently have {{ cpu }} CPU and {{ memory }} GB of memory provisioned across {{ clustercount }} clusters. This represents {{ vmcount }} of which {{ poweredon }}
+      are powered on.
   </speak>
