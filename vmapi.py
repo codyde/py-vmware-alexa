@@ -45,9 +45,9 @@ def get_rest_api_data(req_url):
     AuthConfig.read("/srv/avss/appdata/etc/auth.ini")
     try:
         sid = AuthConfig.get("auth", "sid")
-        print("Using already cached auth sid")
+        print("Existing SID found; using cached SID")
     except:
-        print("Auth sid was invalid, requesting new")
+        print("No SID loaded; aquiring new")
         auth_vcenter_rest()
         AuthConfig.read("/srv/avss/appdata/etc/auth.ini")
         sid = AuthConfig.get("auth", "sid")
@@ -56,7 +56,7 @@ def get_rest_api_data(req_url):
                         headers={'vmware-api-session-id': sid})
     if resp.status_code != 200:
         print('Error! API responded with: {}'.format(resp.status_code))
-        auth_vcenter_rest()
+        newsid = auth_vcenter_rest()
         get_rest_api_data(req_url)
         return
     return resp
