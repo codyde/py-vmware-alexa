@@ -163,6 +163,7 @@ datastore space on each in gigabytes is {}'.format(dsTotal, ds)
 def get_powered_on_vms():
     pwrVM = powered_on_vm_count()
     pwr_msg = 'There are currently {} virtual machines powered on in your environment'.format(pwrVM)
+    print(pwr_msg)
     return pwr_msg
 
 @ask.intent("CPUCountIntent")
@@ -170,7 +171,7 @@ def get_cpu_count_provisioned():
     cpuCount = vm_cpu_count()
     cpuCountMSG = 'Your environment currently has {} cpu provisioned'.format(cpuCount)
     return cpuCountMSG
-    
+
 
 @ask.intent("HostClusterStatusIntent")
 def share_cluster_status():
