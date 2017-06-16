@@ -2,7 +2,7 @@ all_your_base_msg: All your base are belong to {{ who }}
 
 multiple_line_example: |
 <speak>
-    Here is a number <w role="amazon:VBD">read</w> 
+    Here is a number for {{ who }}<w role="amazon:VBD">read</w> 
     as a cardinal number: 
     <say-as interpret-as="cardinal">12345</say-as>. 
     Here is a word spelled out: 
