@@ -8,8 +8,6 @@ VMCountIntent count my virtual machines
 ApplianceHealthIntent report health
 DSIntent report datastores
 VCenterBuildIntent report vcenter build
-HostClustersIntent list hosts in clusters
-HostClustersIntent list hosts
 HostClusterStatusIntent report cluster status
 VSANClusterIntent report vsan version
 BuildWindowsIntent build windows
@@ -19,6 +17,5 @@ HostInClusterIntent report hosts in clusters
 HostInClusterIntent report hosts
 memoryCount report provisioned memory
 ApplianceUptimeIntent report appliance uptime
-HostsIntent report v center hosts 
 PoweredOnVMIntent count powered on machines 
-CPUCountIntent count provisioned c p u 
+CPUCountIntent report provisioned CPU 
