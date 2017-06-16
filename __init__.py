@@ -32,14 +32,6 @@ def execute(cmd, ofile=subprocess.PIPE, efile=subprocess.PIPE,
     return (proc, out)
 
 
-def get_datastores():
-    dsarry = []
-    for i in get_datastore():
-        dsround = round(i/1024/1024/1024)
-        dsarry.append(dsround)
-    return dsarry
-
-
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
     if request.method == "POST":
@@ -118,14 +110,21 @@ def memory_count():
     count_msg = 'You have provisioned {} gigabytes of memory'.format(memCount)
     return question(count_msg)
 
+
 @ask.intent("dcReport")
 def dc_report():
     memcount = vm_memory_count()/1024
     cpucount = vm_cpu_count()
     (version, build) = get_vcenter_build()
     health = get_vcenter_health_status()
-    capacity_msg = render_template('capacity_report', memory=memcount, cpu=cpucount, version=format(version), build=build, health=health)
-    return(capacity_msg)
+    clustercount = len(get_cluster())
+    vmcount = vm_count()
+    poweredon = powered_on_vm_count()
+    uptime = get_uptime()
+    capacity_msg = render_template('capacity_report', memory=memcount, cpu=cpucount, 
+    version=format(version), build=build, health=health, clustercount=clustercount, 
+    vmcount=vmcount, poweredon=poweredon, uptime=uptime)
+    return question(capacity_msg).simple_card(health)
 
 
 @ask.intent("HostClustersIntent")
@@ -143,10 +142,6 @@ def share_vcenter_build():
     notice = render_template('vcenter_build', version=format(version), build=build)
     return statement(notice)
 
-@ask.intent('RBelongToUsIntent')
-def all_your_base():
-    notice = render_template('multiple_line_example', who='Cody')
-    return statement(notice)
 
 @ask.intent("ApplianceUptimeIntent")
 def uptime_appliance():
@@ -176,14 +171,14 @@ def get_powered_on_vms():
     pwrvm = powered_on_vm_count()
     pwr_msg = 'There are currently {} virtual machines powered on in your environment'.format(pwrvm)
     print(pwr_msg)
-    return pwr_msg
+    return question(pwr_msg)
 
 
 @ask.intent("cpuIntent")
 def share_cpu_intent():
     vmcpu = vm_cpu_count()
-    print(str(vmcpu))
-    return str(vmcpu)
+    vmcpumsg = "You current have {} CPU provisioned in your environment".format(vmcpu)
+    return question(vmcpu)
 
 
 @ask.intent("HostClusterStatusIntent")
