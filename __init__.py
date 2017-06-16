@@ -118,7 +118,16 @@ def memory_count():
     count_msg = 'You have provisioned {} gigabytes of memory'.format(memCount)
     return question(count_msg)
 
-  
+@ask.intent("dcReport")
+def dc_report():
+    memcount = vm_memory_count()/1024
+    cpucount = vm_cpu_count()
+    (version, build) = get_vcenter_build()
+    health = get_vcenter_health_status()
+    capacity_msg = render_template('capacity_report', memory=memcount, cpu=cpucount, version=format(version), build=build, health=health)
+    return(capacity_msg)
+
+
 @ask.intent("HostClustersIntent")
 def hosts_in_cluster():
     hosts = get_cluster()
