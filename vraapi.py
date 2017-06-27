@@ -11,7 +11,7 @@ def vra_auth():
     user = Config.get("vraConfig", "user")
     password = Config.get("vraConfig", "password")
     tenant = Config.get("vraConfig", "tenant")
-    url = "{}/api/tokens".format(url)
+    url = "{}/identity/api/tokens".format(url)
     payload = '{{"username":"{}","password":"{}","tenant":"{}"}}'.format(user, password, tenant)
     headers = {
         'accept': "application/json",
@@ -30,16 +30,15 @@ def vra_build(blueprint):
     varray = {}
     auth = vra_auth()
     vraApiUrl = "{}/catalog-service/api/consumer/entitledCatalogItemViews".format(url)
-    vraheaders = {'accept': "application/json", 'authorization': auth}
+    vraheaders = {
+        'accept': "application/json",
+        'authorization': auth
+        }
     tempres = requests.request("GET", vraApiUrl, headers=vraheaders, verify=False)
     for i in tempres.json()['content']:
         p = i['name']
         q = i['catalogItemId']
         varray[p] = q
-    vraheaders = {
-        'accept': "application/json",
-        'authorization': auth
-        }
     template = "{}/catalog-service/api/consumer/entitledCatalogItems/{}/requests/template".format(url, varray[blueprint])
     req = "{}/catalog-service/api/consumer/entitledCatalogItems/{}/requests".format(url, varray[blueprint])
     templateJson = requests.request("GET", template, headers=vraheaders, verify=False)
