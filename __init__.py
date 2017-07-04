@@ -3,6 +3,7 @@ from flask_ask import Ask, statement, question
 from flask_assets import Bundle, Environment
 from vmapi import *
 from vraapi import vra_build
+from nsxapi import validateNSX, createNsxWire
 import os
 import sys
 import subprocess
@@ -236,6 +237,16 @@ def centos_build():
 def nginx_build():
     nginx = vra_build('Nginx')
     return question(nginx)
+
+@ask.intent("CheckNsxApi")
+def check_nsx():
+    status = validateNSX()
+    return question(status
+
+@ask.intent("createNSXWire")
+def create_vwire(vwname):
+    lsvwire = createNsxWire(vwname)
+    return question(lsvwire)
 
 
 @ask.intent("NoIntent")
