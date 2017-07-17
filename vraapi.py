@@ -13,10 +13,10 @@ def vra_auth():
     tenant = Config.get("vraConfig", "tenant")
     url = "{}/identity/api/tokens".format(url)
     payload = '{{"username":"{}","password":"{}","tenant":"{}"}}'.format(user, password, tenant)
-headers = {
-    'accept': "application/json",
-    'content-type': "application/json",
-    }
+    headers = {
+        'accept': "application/json",
+        'content-type': "application/json",
+        }
     response = requests.request("POST", url, data=payload, headers=headers, verify=False)
     j = response.json()['id']
     auth = "Bearer "+j

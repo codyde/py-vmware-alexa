@@ -241,7 +241,7 @@ def nginx_build():
 @ask.intent("CheckNsxApi")
 def check_nsx():
     status = validateNSX()
-    return question(status
+    return question(status)
 
 @ask.intent("createNSXWire")
 def create_vwire(vwname):
