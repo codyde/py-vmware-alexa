@@ -79,7 +79,7 @@ def configurepage():
             Config.add_section('nsxConfig')
             Config.set('nsxConfig', 'url', nsxurl)
             Config.set('nsxConfig', 'user', nsxuser)
-            Config.set('nsxPass', 'password', nsxpass)
+            Config.set('nsxConfig', 'password', nsxpass)
             Config.write(cfgfile)
             cfgfile.close()
         return render_template('configure.html')
