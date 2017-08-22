@@ -11,7 +11,7 @@ from pyVmomi import vim
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 __all__ = ['get_vcenter_health_status', 'vm_count', 'vm_memory_count',
-           'vm_cpu_count', 'powered_on_vm_count', 'get_vm', 'get_uptime', 'get_cluster',
+           'vm_cpu_count', 'powered_on_vm_count', 'get_vm', 'get_vms', 'get_uptime', 'get_cluster',
            'get_datastore', 'get_networks', 'get_vcenter_build', 'get_first_cluster',
            'get_cluster_status', 'get_vsan_version']
 
@@ -165,6 +165,12 @@ def get_vm(name):
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
     i = get_rest_api_data('{}/rest/vcenter/vm?filter.names={}'.format(url, name))
+    return i.json()['value']
+
+def get_vms():
+    config.read("/srv/avss/appdata/etc/config.ini")
+    url = config.get("vcenterConfig", "url")
+    i = get_rest_api_data('{}/rest/vcenter/vms'.format(url))
     return i.json()['value']
 
 

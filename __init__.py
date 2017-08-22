@@ -62,6 +62,9 @@ def configurepage():
             vrauser = request.form['vrauser']
             vrapassword = request.form['vrapass']
             vratenant = request.form['vratenant']
+            nsxurl = request.form['nsxurl']
+            nsxuser = request.form['nsxuser']
+            nsxpass = request.form['nsxpass']
             Config = configparser.ConfigParser()
             cfgfile = open("/srv/avss/appdata/etc/config.ini", 'w')
             Config.add_section('vcenterConfig')
@@ -73,12 +76,20 @@ def configurepage():
             Config.set('vraConfig', 'user', vrauser)
             Config.set('vraConfig', 'password', vrapassword)
             Config.set('vraConfig', 'tenant', vratenant)
+            Config.add_section('nsxConfig')
+            Config.set('nsxConfig', 'url', nsxurl)
+            Config.set('nsxConfig', 'user', nsxuser)
+            Config.set('nsxPass', 'password', nsxpass)
             Config.write(cfgfile)
             cfgfile.close()
         return render_template('configure.html')
     else:
         return redirect(url_for('homepage'))
 
+@app.route('/api/rest/vcenter/vms')
+def getvms():
+    p = get_vms()
+    return p
 
 @app.route('/commands/')
 def alexacommands():
