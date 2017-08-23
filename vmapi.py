@@ -170,7 +170,7 @@ def get_vm(name):
 def get_vms():
     config.read("/srv/avss/appdata/etc/config.ini")
     url = config.get("vcenterConfig", "url")
-    i = get_rest_api_data('{}/rest/vcenter/vms'.format(url))
+    i = get_rest_api_data('{}/rest/vcenter/vm'.format(url))
     return i.json()['value']
 
 
