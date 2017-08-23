@@ -89,7 +89,7 @@ def configurepage():
 @app.route('/api/rest/vcenter/vms')
 def getvms():
     p = get_vms()
-    return p
+    return json.dumps(p)
 
 @app.route('/commands/')
 def alexacommands():

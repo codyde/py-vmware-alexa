@@ -1,5 +1,7 @@
+import requests
+
 def auth_vcenter_rest():
-    url = "https//hlcorevc01.humblelab.com"
+    url = "https://hlcorevc01.humblelab.com"
     username = "administrator@vsphere.local"
     password = "VMware123!"
     print('Authenticating to vCenter REST API, user: {}'.format(username))
@@ -10,13 +12,9 @@ def auth_vcenter_rest():
         return
     return resp.json()['value']
 
+
 def get_rest_api_data(req_url):
-    var sid = auth_vcenter_rest()
-    try:
-        print("Existing SID found; using cached SID")
-    except:
-        print("No SID loaded; aquiring new")
-        auth_vcenter_rest()
+    sid = auth_vcenter_rest()
     print('Requesting Page: {}'.format(req_url))
     resp = requests.get(req_url, verify=False,
                         headers={'vmware-api-session-id': sid})
@@ -29,4 +27,9 @@ def get_rest_api_data(req_url):
         auth_vcenter_rest()
         get_rest_api_data(req_url)
         return
-     return resp
+    return resp
+
+def get_vms():
+    url = "https://hlcorevc01.humblelab.com"
+    i = get_rest_api_data('{}/rest/vcenter/vm'.format(url))
+    return i.json()['value']
