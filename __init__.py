@@ -113,6 +113,8 @@ def share_count():
     counting = vm_count()
     count_msg = 'The total number of virtual machines \
 registered in this v-center is {}'.format(counting)
+    payload = {"message":counting}
+    requests.post("https://7mx9stmpja.execute-api.us-east-1.amazonaws.com/Production/sendnotification", data=json.dumps(counting))
     return question(count_msg)
 
 
@@ -120,6 +122,8 @@ registered in this v-center is {}'.format(counting)
 def memory_count():
     memCount = vm_memory_count()/1024
     count_msg = 'You have provisioned {} gigabytes of memory'.format(memCount)
+    payload = {"message":memCount}
+    requests.post("https://7mx9stmpja.execute-api.us-east-1.amazonaws.com/Production/sendnotification", data=json.dumps(payload))
     return question(count_msg)
 
 
