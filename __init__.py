@@ -12,6 +12,7 @@ import json
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
+app.config['ASK_VERIFY_REQUESTS'] = False
 ask = Ask(app, "/control_center")
 
 env = Environment(app)
