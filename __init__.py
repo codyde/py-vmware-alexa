@@ -19,7 +19,7 @@ env = Environment(app)
 js = Bundle('js/clarity-icons.min.js', 'js/clarity-icons-api.js',
             'js/clarity-icons-element.js', 'js/custom-elements.min.js')
 env.register('js_all', js)
-css = Bundle('css/clarity-ui.min.css', 'css/clarity-icons.min.css')
+css = Bundle('css/clarity-ui-dark.min.css', 'css/clarity-icons.min.css')
 env.register('css_all', css)
 
 VMTENV = os.environ.copy()
