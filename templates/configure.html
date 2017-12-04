@@ -4,67 +4,33 @@ form .form-block>label {
     font-size:22px;
 }
 </style>
-<div class="container ">
-    <form method="POST">
-        <section class="form-block">
-            <label class="test">vCenter Configuration</label>
-            <div class="form-group">
-                <label for="vcenterurl">vCenter Server URL</label>
-                <input type="text" name="vcenterurl" placeholder="https://vcenter.example.domain" size="45" value="{{request.form.vcenterurl}}">
+<form>
+    <section class="form-block">
+        <label>A Form</label>
+        <div class="form-group">
+            <label for="aForm_1">This is a form field</label>
+            <input type="text" id="aForm_1" placeholder="Enter value here" size="45">
+        </div>
+        <div class="form-group">
+            <label for="aForm_2">Another form field</label>
+            <input type="password" id="aForm_2" placeholder="Enter another value here" size="35">
+        </div>
+        <div class="form-group">
+            <label for="aForm_3">A select box</label>
+            <div class="select">
+                <select id="aForm_3">
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label for="vcenteruser">vCenter Server Username</label>
-                <input type="text" name="vcenteruser" placeholder="administrator@vsphere.local" size="45" value="{{request.form.vcenteruser}}">
-            </div>
-            <div class="form-group">
-                <label for="vcenterpassword">vCenter User Password</label>
-                <input type="password" name="vcenterpassword" placeholder="Password" value="{{request.form.vcenterpassword}}">
-            </div>
-            <label>vRealize Automation Configuration</label>
-            <div class="form-group">
-                <label for="vraurl">vRA API URL</label>
-                <input type="text" name="vraurl" placeholder="https://vra-server.example.domain" size="45" value="{{request.form.vraurl}}">
-            </div>
-            <div class="form-group">
-                <label for="vratenant">vRA Tenant Name</label>
-                <input type="text" name="vratenant" placeholder="vsphere.local" size="45" value="{{request.form.vratenant}}">
-            </div>
-            <div class="form-group">
-                <label for="vrauser">vRA Username</label>
-                <input type="text" name="vrauser" placeholder="administrator@vsphere.local" size="45" value="{{request.form.vrauser}}">
-            </div>
-            <div class="form-group">
-                <label for="vrapass">vRA Password</label>
-                <input type="password" name="vrapass" placeholder="Password" value="{{request.form.vrapass}}">
-            </div>
-            <label>NSX Configuration</label>
-            <div class="form-group">
-                <label for="nsxurl">NSX API URL</label>
-                <input type="text" name="nsxurl" placeholder="https://nsx-manager.example.domain" "{{request.form.nsxurl}}">
-            </div>
-            <div class="form-group">
-                <label for="nsxuser">NSX Username</label>
-                <input type="text" name="nsxuser" placeholder="administrator@vsphere.local" "{{request.form.nsxuser}}">
-            </div>
-            <div class="form-group">
-                <label for="nsxpass">NSX Password</label>
-                <input type="password" name="nsxpass" placeholder="Password" "{{request.form.nsxpass}}">
-            </div>
-            <label>vRealize Operations Configuration</label>
-            <div class="form-group">
-                <label for="vrops_server_url">vROPS API URL</label>
-                <input type="text" id="vrops_server_url" placeholder="https://vrops-url.example.domain" size="45" disabled>
-            </div>
-            <div class="form-group">
-                <label for="vrops_server_user">vROPS Username</label>
-                <input type="text" id="vrops_server_user" placeholder="administrator@vsphere.local" size="45"disabled>
-            </div>
-            <div class="form-group">
-                <label for="vrops_server_pass">vROPS Password</label>
-                <input type="password" id="vrops_server_pass" placeholder="Password" disabled>
-            </div>
-        </section>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+        </div>
+        <div class="form-group">
+            <label for="aForm_4">Textarea</label>
+            <textarea id="aForm_4" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Button</button>
+    </section>
+</form>
 {% endblock %}
